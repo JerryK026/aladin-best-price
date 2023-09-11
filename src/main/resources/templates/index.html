@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Item Search</title>
+    <script>
+        let itemIdCount = 1;
+
+        function addItemField() {
+            itemIdCount++;
+            const newItemField = document.createElement("input");
+            newItemField.setAttribute("type", "text");
+            newItemField.setAttribute("name", "itemIds");
+            newItemField.setAttribute("placeholder", `아이템 ID ${itemIdCount} 입력`);
+            document.getElementById('itemFields').appendChild(newItemField);
+        }
+    </script>
+</head>
+<body>
+<form action="/best-price" method="get">
+    <div id="itemFields">
+        <input type="text" name="itemIds" placeholder="아이템 ID 1 입력">
+    </div>
+    <div>
+        <input type="radio" id="best" name="quality" value="최상" checked>
+        <label for="best">최상</label>
+
+        <input type="radio" id="good" name="quality" value="상">
+        <label for="good">상</label>
+
+        <input type="radio" id="medium" name="quality" value="중">
+        <label for="medium">중</label>
+    </div>
+    <button type="button" onclick="addItemField()">아이템 ID 추가</button>
+    <input type="submit" value="전송">
+</form>
+
+<h2>Results:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>책 제목</th>
+        <th>가격</th>
+        <th>판매자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="usedBook : ${usedBooks}">
+        <td th:text="${usedBook.title}"></td>
+        <td th:text="${usedBook.price}"></td>
+        <td th:text="${usedBook.sellerName}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
