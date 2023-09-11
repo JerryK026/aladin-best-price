@@ -6,9 +6,17 @@ import java.util.*;
  * 같은 종류의 중고책들이 들어간다
  */
 public class Books implements Iterable<Book> {
-    List<Book> books = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
+    private Set<String> sellerCache = new HashSet<>();
 
     public void add(Book newBook) {
+        // 기존에 등록된 적 없는 판매자면 바로 add한다
+        if (!sellerCache.contains(newBook.getSeller().getName())) {
+            books.add(newBook);
+            sellerCache.add(newBook.getSeller().getName());
+            return;
+        }
+
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
 
@@ -20,8 +28,6 @@ public class Books implements Iterable<Book> {
                 return;
             }
         }
-
-        books.add(newBook);
     }
 
     public void add(String title, int price, String seller, int deliveryFare) {
@@ -34,10 +40,6 @@ public class Books implements Iterable<Book> {
 
     public Book get(int idx) {
         return books.get(idx);
-    }
-
-    public List<Book> asList() {
-        return this.books;
     }
 
     @Override
