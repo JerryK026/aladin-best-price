@@ -17,7 +17,8 @@ public class UsedBooksBestPriceRequest {
     public List<Integer> getItemIds() {
         return itemIds.stream()
                 .filter(Objects::nonNull)
-                .toList();
+                .toList()
+                .subList(0, 4);
     }
 
     public Quality getQuality() {
